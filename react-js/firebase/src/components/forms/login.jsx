@@ -43,55 +43,60 @@ function Login() {
             })
             // display the error if any
             .catch((err) => {
-                alert(err);
+                toast.error(err.message || "Something went wrong")
+
             });
     };
 
 
 
     return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
-            <div className="bg-white p-8 rounded shadow-md w-96">
-                <form className="space-y-4">
+
+        <>
+            <div className="flex justify-center items-center h-screen bg-gray-100">
+                <div className="bg-white p-8 rounded shadow-md w-96">
+                    <form className="space-y-4">
 
 
-                    <input
-                        className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email"
-                        type="email"
-                    />
+                        <input
+                            className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Email"
+                            type="email"
+                        />
 
-                    <input
-                        className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                        type="password"
-                    />
+                        <input
+                            className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Password"
+                            type="password"
+                        />
 
-                    <button
-                        type="submit"
-                        onClick={loginToApp}
-                        className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none"
-                    >
-                        Sign In
-                    </button>
-                </form>
+                        <button
+                            type="button"
+                            onClick={loginToApp}
+                            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none"
+                        >
+                            Sign In
+                        </button>
+                    </form>
 
-                <p className="mt-4 text-center">
-                    Not a member?{' '}
-                    <Link
-                        className="text-blue-500 cursor-pointer"
+                    <p className="mt-4 text-center">
+                        Not a member?{' '}
+                        <Link
+                            className="text-blue-500 cursor-pointer"
 
-                        to={`/register`}
-                    >
-                        Register Now
-                    </Link>
-                </p>
+                            to={`/register`}
+                        >
+                            Register Now
+                        </Link>
+                    </p>
+                </div>
             </div>
-        </div>
+
+        </>
 
     );
 }
