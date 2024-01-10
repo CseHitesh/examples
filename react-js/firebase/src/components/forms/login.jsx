@@ -1,103 +1,96 @@
-import { Link, Outlet } from "react-router-dom";
-import React, { useState } from 'react';
-import {
-    auth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    updateProfile,
-} from '../../services/utils/firebase.js';
+import { object, string } from "zod";
 
-import { login } from '../../redux/slices/authSlice.js';
-import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { FcGoogle } from "react-icons/fc";
+import { FcInTransit } from "react-icons/fc";
+import { Link } from "react-router-dom";
+import React from "react";
+import { googleLoginPopup } from "../../services/utils/helpers";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = object({
+    email: string().email({ message: "Invalid email address" }).min(1),
+    password: string().min(8, "Password Must be 8 Char"),
+});
 
 function Login() {
-    // use state constants for the the form inputs
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('');
-    const [profilePic, setProfilePic] = useState('');
-    const dispatch = useDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: zodResolver(loginSchema),
+    });
 
+    const handleGoogleLogin = async () => {
 
+        try {
+            const user = await googleLoginPopup()
 
-    const loginToApp = (e) => {
-        e.preventDefault();
+            console.log({ user });
 
-        // Sign in an existing user with Firebase
-        signInWithEmailAndPassword(auth, email, password)
-            // returns  an auth object after a successful authentication
-            // userAuth.user contains all our user details
-            .then((userAuth) => {
-                // store the user's information in the redux state
-                dispatch(
-                    login({
-                        email: userAuth.user.email,
-                        uid: userAuth.user.uid,
-                        displayName: userAuth.user.displayName,
-                        photoUrl: userAuth.user.photoURL,
-                    })
-                );
+        } catch (error) {
 
-                toast.success("Login Successfully!")
-            })
-            // display the error if any
-            .catch((err) => {
-                toast.error(err.message || "Something went wrong")
-
-            });
+            console.log({ error });
+        }
     };
 
 
+    const onSubmit = (data) => {
+        console.log(data);
+
+    };
 
     return (
-
         <>
             <div className="flex justify-center items-center h-screen bg-gray-100">
-                <div className="bg-white p-8 rounded shadow-md w-96">
-                    <form className="space-y-4">
-
-
+                <div className="bg-white p-8 rounded-2xl shadow-md w-96">
+                    <FcInTransit size={60} className="my-2" />
+                    <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                         <input
                             className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            {...register("email")}
                             placeholder="Email"
                             type="email"
                         />
+                        {errors.email && (
+                            <p className="text-red-500">{errors.email.message}</p>
+                        )}
 
                         <input
                             className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            {...register("password")}
                             placeholder="Password"
                             type="password"
                         />
+                        {errors.password && (
+                            <p className="text-red-500">{errors.password.message}</p>
+                        )}
 
                         <button
-                            type="button"
-                            onClick={loginToApp}
-                            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 focus:outline-none"
+                            type="submit"
+                            className="bg-blue-500 text-white p-2 w-full rounded hover:bg-blue-600 focus:outline-none"
                         >
                             Sign In
                         </button>
                     </form>
 
-                    <p className="mt-4 text-center">
-                        Not a member?{' '}
-                        <Link
-                            className="text-blue-500 cursor-pointer"
+                    <div className="flex justify-center items-center">
+                        <button className="  py-2 px-4 rounded border w-full mt-3" onClick={handleGoogleLogin}>
+                            Sign in with <FcGoogle className="inline-block ml-1" />
+                        </button>
+                    </div>
 
-                            to={`/register`}
-                        >
+                    <p className="mt-4 text-center">
+                        Not a member?{" "}
+                        <Link className="text-blue-500 cursor-pointer" to={`/register`}>
                             Register Now
                         </Link>
                     </p>
                 </div>
             </div>
-
         </>
-
     );
 }
 

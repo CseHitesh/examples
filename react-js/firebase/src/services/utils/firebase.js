@@ -1,4 +1,5 @@
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
@@ -25,6 +26,7 @@ let app = initializeApp(firebaseConfig);
 
 //init services
 const auth = getAuth();
+const googleProvider = new GoogleAuthProvider();
 
 const db = getFirestore(app);
 
@@ -36,4 +38,5 @@ export {
   signInWithEmailAndPassword,
   signOut,
   db,
+  googleProvider,
 };
