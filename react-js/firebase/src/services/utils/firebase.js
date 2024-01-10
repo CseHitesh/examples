@@ -7,6 +7,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 
+import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
@@ -20,10 +21,12 @@ const firebaseConfig = {
 };
 
 //init firebase app
-initializeApp(firebaseConfig);
+let app = initializeApp(firebaseConfig);
 
 //init services
 const auth = getAuth();
+
+const db = getFirestore(app);
 
 export {
   auth,
@@ -32,4 +35,5 @@ export {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  db,
 };
