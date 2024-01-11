@@ -10,17 +10,19 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const schema = object({
-    name: string()
+    userName: string()
+        .min(3, { message: 'Please enter a valid username' })
+        .max(50, { message: 'username should be at most 50 characters' }),
+    fullName: string()
         .min(3, { message: 'Please enter a valid name' })
         .max(50, { message: 'Name should be at most 50 characters' }),
     email: string()
-        .email({ message: 'Invalid email address' })
+        .email({ message: 'Please enter a valid email' })
         .min(1, { message: 'Email is required' })
         .max(255, { message: 'Email should be at most 255 characters' }),
     password: string()
         .min(8, { message: 'Password should be at least 8 characters' })
         .max(50, { message: 'Password should be at most 50 characters' }),
-    // confirmPassword: string().ref('password', { message: 'Passwords do not match' }),
 });
 
 function Register() {
@@ -60,27 +62,37 @@ function Register() {
             <div className="bg-white p-8 rounded-2xl shadow-md w-96">
                 <FcInTransit size={60} className="my-2" />
                 <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+
                     <input
                         className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
-                        {...register('name')}
-                        placeholder="Enter your name"
+                        {...register('fullName')}
+                        placeholder="Enter your Full Name"
                         type="text"
                     />
-                    {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+                    {errors.fullName && <p className="text-red-500">{errors.fullName.message}</p>}
+
+                    <input
+                        className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
+                        {...register('userName')}
+                        placeholder="Enter your username"
+                        type="text"
+                    />
+                    {errors.userName && <p className="text-red-500">{errors.userName.message}</p>}
 
                     <input
                         className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
                         {...register('email')}
-                        placeholder="Email"
+                        placeholder="Enter your Email"
                         type="email"
                     />
                     {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+
 
                     <div className="relative flex justify-center items-center">
                         <input
                             className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
                             {...register('password')}
-                            placeholder="Password"
+                            placeholder="Enter your Password"
                             type={showPassword ? 'text' : 'password'}
                         />
                         <button
@@ -96,7 +108,7 @@ function Register() {
                     <input
                         className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-blue-500"
                         {...register('confirmPassword')}
-                        placeholder="Confirm Password"
+                        placeholder="Enter your confirm Password"
                         type={showPassword ? 'text' : 'password'}
                     />
 
