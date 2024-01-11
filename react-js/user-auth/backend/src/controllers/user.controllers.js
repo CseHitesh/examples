@@ -7,17 +7,19 @@ import jwt from "jsonwebtoken";
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
     const user = await User.findById(userId);
+
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
+    // attach refresh token to the user document to avoid refreshing the access token with multiple refresh tokens
     user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
 
+    await user.save({ validateBeforeSave: false });
     return { accessToken, refreshToken };
   } catch (error) {
     throw new ApiError(
       500,
-      "Something went wrong while generating referesh and access token"
+      "Something went wrong while generating the access token"
     );
   }
 };
@@ -30,7 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
   });
 
   if (existedUser) {
-    throw new ApiError(409, "User with email or username already exists");
+    throw new ApiError(409, "User with email or userName already exists");
   }
 
   const user = await User.create({
@@ -54,14 +56,14 @@ const registerUser = asyncHandler(async (req, res) => {
 });
 
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, username, password } = req.body;
+  const { email, userName, password } = req.body;
 
-  if (!username && !email) {
-    throw new ApiError(400, "username or email is required");
+  if (!userName && !email) {
+    throw new ApiError(400, "userName or email is required");
   }
 
   const user = await User.findOne({
-    $or: [{ username }, { email }],
+    $or: [{ userName }, { email }],
   });
 
   if (!user) {
@@ -74,7 +76,7 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid user credentials");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
+  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
     user._id
   );
 
