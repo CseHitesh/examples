@@ -1,9 +1,6 @@
-import { useRouteError } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 export default function ErrorPage() {
-    const error = useRouteError();
-    console.error(error);
-
     return (
         <div className="flex justify-center items-center h-screen bg-gradient-to-r from-purple-500 to-pink-500">
             <div className="text-center text-white">
@@ -14,12 +11,13 @@ export default function ErrorPage() {
                     <br />
                     Let's get you back to a safer place.
                 </p>
-                <button
-                    className="mt-6 bg-white text-purple-500 px-4 py-2 rounded-full hover:bg-purple-200 focus:outline-none"
-                    onClick={() => navigateToHome()} // Replace with your navigation logic
-                >
-                    Go Home
-                </button>
+                <Link href="/">
+                    <button
+                        className="mt-6 bg-white text-purple-500 px-4 py-2 rounded-full hover:bg-purple-200 focus:outline-none"
+                    >
+                        Go Home
+                    </button>
+                </Link>
             </div>
         </div>
 

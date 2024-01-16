@@ -1,10 +1,8 @@
 import { object, string } from "zod";
 
-import { FcGoogle } from "react-icons/fc";
 import { FcInTransit } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import React from "react";
-import { googleLoginPopup } from "../../services/utils/helpers";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,18 +25,18 @@ function Login() {
 
     const dispatch = useDispatch()
 
-    const handleGoogleLogin = async () => {
+    // const handleGoogleLogin = async () => {
 
-        try {
-            const user = await googleLoginPopup()
+    //     try {
+    //         const user = await googleLoginPopup()
 
-            console.log({ user });
+    //         console.log({ user });
 
-        } catch (error) {
+    //     } catch (error) {
 
-            console.log({ error });
-        }
-    };
+    //         console.log({ error });
+    //     }
+    // };
 
 
     const onSubmit = async (data) => {
