@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = "https://jsonplaceholder.typicode.com/";
+const apiUrl = " http://localhost:8080/api/v1";
 
 const axiosInstance = axios.create({
   baseURL: apiUrl,
@@ -18,11 +18,16 @@ axiosInstance.interceptors.request.use(
   }
 );
 
+// Response Interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
+    // Handle successful responses globally
     return response;
   },
-  async (error) => {}
+  (error) => {
+    // Handle global error responses or specific status codes
+    return Promise.reject(error);
+  }
 );
 
 export default axiosInstance;

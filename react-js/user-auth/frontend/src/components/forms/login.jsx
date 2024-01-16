@@ -8,6 +8,8 @@ import { googleLoginPopup } from "../../services/utils/helpers";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { loginUser } from "../../store/slices/authSlice";
+import { toast } from 'react-toastify';
 
 const loginSchema = object({
     email: string().email({ message: "Invalid email address" }).min(1),
@@ -23,6 +25,8 @@ function Login() {
         resolver: zodResolver(loginSchema),
     });
 
+    const dispatch = useDispatch()
+
     const handleGoogleLogin = async () => {
 
         try {
@@ -37,8 +41,17 @@ function Login() {
     };
 
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const onSubmit = async (data) => {
+
+        try {
+
+            await dispatch(loginUser(data)).unwrap()
+            toast.success("Login successfully")
+        } catch (error) {
+            toast.error(error.message)
+
+        }
+
 
     };
 
@@ -76,11 +89,11 @@ function Login() {
                         </button>
                     </form>
 
-                    <div className="flex justify-center items-center">
+                    {/* <div className="flex justify-center items-center">
                         <button className="  py-2 px-4 rounded border w-full mt-3" onClick={handleGoogleLogin}>
                             Sign in with <FcGoogle className="inline-block ml-1" />
                         </button>
-                    </div>
+                    </div> */}
 
                     <p className="mt-4 text-center">
                         Not a member?{" "}

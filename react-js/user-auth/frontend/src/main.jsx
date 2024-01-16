@@ -1,6 +1,6 @@
 import "./index.css";
 
-import { persistor, store } from "./redux/store.js";
+import { persistor, store } from "./store/store.js";
 
 import App from "./App.jsx";
 import { PersistGate } from 'redux-persist/integration/react'

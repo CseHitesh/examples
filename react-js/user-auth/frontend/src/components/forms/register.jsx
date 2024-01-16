@@ -8,6 +8,9 @@ import { Link } from 'react-router-dom';
 import { googleLoginPopup } from '../../services/utils/helpers';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../../store/slices/authSlice';
+import { toast } from 'react-toastify';
 
 const schema = object({
     userName: string()
@@ -30,6 +33,7 @@ function Register() {
         resolver: zodResolver(schema),
     });
 
+    const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -51,10 +55,16 @@ function Register() {
     }
 
 
-    const onSubmit = (data) => {
-        // Handle form submission logic here
-        console.log(data);
-        // Dispatch actions or perform further actions as needed
+    const onSubmit = async (data) => {
+
+        try {
+            await dispatch(registerUser(data)).unwrap()
+            toast.success("User Register Successfully");
+
+        } catch (error) {
+
+            toast.error(error.message)
+        }
     };
 
     return (
@@ -123,11 +133,11 @@ function Register() {
                     </button>
                 </form>
 
-                <div className="flex justify-center items-center">
+                {/* <div className="flex justify-center items-center">
                     <button className="py-2 px-4 rounded border w-full mt-3" onClick={handleGoogleRegister}>
                         Sign up with <FcGoogle className="inline-block ml-1" />
                     </button>
-                </div>
+                </div> */}
 
                 <p className="mt-4 text-center">
                     Already a member?{' '}
