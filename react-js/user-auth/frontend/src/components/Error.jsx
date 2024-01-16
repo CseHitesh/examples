@@ -1,5 +1,5 @@
 import { ErrorBoundary } from "react-error-boundary";
-import React from 'react'
+import React from "react";
 
 function fallbackRender({ error, resetErrorBoundary }) {
     // Call resetErrorBoundary() to reset the error boundary and retry the render.
@@ -12,10 +12,6 @@ function fallbackRender({ error, resetErrorBoundary }) {
     );
 }
 
-
-
-
-
 const Error = ({ children }) => {
     return (
         <ErrorBoundary
@@ -24,11 +20,9 @@ const Error = ({ children }) => {
                 // Reset the state of your app so the error doesn't happen again
             }}
         >
-            {
-                children
-            }
+            {children}
         </ErrorBoundary>
-    )
-}
+    );
+};
 
-export default Error
+export default Error;

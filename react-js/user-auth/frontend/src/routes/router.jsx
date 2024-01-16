@@ -5,13 +5,16 @@ import ProtectedRoute from "./protectedRoutes/ProtectedRoute.jsx";
 import Register from "../components/forms/register";
 import Todo from "./Todo/index.jsx";
 import { createBrowserRouter } from "react-router-dom";
+import DefaultLayout from "../components/layout/DefaultLayout.jsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: (
             <ProtectedRoute>
-                <Home />
+                <DefaultLayout>
+                    <Home />
+                </DefaultLayout>
             </ProtectedRoute>
         ),
         errorElement: <ErrorPage />,
