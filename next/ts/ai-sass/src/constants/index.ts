@@ -10,13 +10,13 @@ export const tools = [
     color: "text-violet-500",
     bgColor: "bg-violet-500/10",
   },
-  {
-    label: "Music Generation",
-    icon: Music,
-    href: "/music",
-    color: "text-emerald-500",
-    bgColor: "bg-emerald-500/10",
-  },
+  // {
+  //   label: "Music Generation",
+  //   icon: Music,
+  //   href: "/music",
+  //   color: "text-emerald-500",
+  //   bgColor: "bg-emerald-500/10",
+  // },
   {
     label: "Image Generation",
     icon: ImageIcon,
@@ -24,13 +24,13 @@ export const tools = [
     bgColor: "bg-pink-700/10",
     href: "/image",
   },
-  {
-    label: "Video Generation",
-    icon: VideoIcon,
-    color: "text-orange-700",
-    bgColor: "bg-orange-700/10",
-    href: "/video",
-  },
+  // {
+  //   label: "Video Generation",
+  //   icon: VideoIcon,
+  //   color: "text-orange-700",
+  //   bgColor: "bg-orange-700/10",
+  //   href: "/video",
+  // },
   {
     label: "Code Generation",
     icon: Code,
