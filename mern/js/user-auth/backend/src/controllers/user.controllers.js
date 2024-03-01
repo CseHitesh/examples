@@ -17,6 +17,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
     await user.save({ validateBeforeSave: false });
     return { accessToken, refreshToken };
   } catch (error) {
+    console.log({ error });
     throw new ApiError(
       500,
       "Something went wrong while generating the access token"
@@ -31,7 +32,7 @@ const registerUser = asyncHandler(async (req, res) => {
     $or: [{ userName }, { email }],
   });
 
-  if (existedUser) {
+  if (existedUser) {   
     throw new ApiError(409, "User with email or userName already exists");
   }
 

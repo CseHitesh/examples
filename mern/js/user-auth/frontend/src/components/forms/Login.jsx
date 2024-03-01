@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUser } from "../../store/slices/authSlice";
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const loginSchema = object({
     email: string().email({ message: "Invalid email address" }).min(1),
@@ -24,6 +25,8 @@ function Login() {
     });
 
     const dispatch = useDispatch()
+
+    const navigate = useNavigate();
 
     // const handleGoogleLogin = async () => {
 
@@ -45,6 +48,8 @@ function Login() {
 
             await dispatch(loginUser(data)).unwrap()
             toast.success("Login successfully")
+
+            navigate("/");
         } catch (error) {
             toast.error(error.message)
 
