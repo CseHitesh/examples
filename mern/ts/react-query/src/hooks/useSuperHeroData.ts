@@ -1,25 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import apiClient from "../utils/apiClient";
 
-// interface Superhero {
-//   id: number;
-//   name: string;
-//   alterEgo: string;
-// }
-interface heroId {
-  heroId: number;
-}
-
-const fetchSuperHero = async ({ heroId }: heroId) => {
+const fetchSuperHero = async ({ queryKey }: { queryKey: string[] }) => {
   return await apiClient
-    .get(`/superheroes?id=${heroId}`)
+    .get(`/superheroes?id=${queryKey[1]}`)
     .then((result) => result.data);
 };
 
-export const useSuperHeroData = ({ heroId }: heroId) => {
+export const useSuperHeroData = ({ heroId }: { heroId: string }) => {
   return useQuery({
     queryKey: ["superhero", heroId],
-    queryFn: () => fetchSuperHero({ heroId }),
+    // queryFn: () => fetchSuperHero({ heroId }),// query automatically passes the queryKey from where we can get heroId
+    queryFn: fetchSuperHero,
     select: (data) => {
       return data[0];
     },
