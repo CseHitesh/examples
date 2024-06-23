@@ -4,23 +4,30 @@ import Home from "../pages/Home";
 import SuperHeroAxios from "../pages/SuperHeroAxios";
 import SuperHeroRtk from "../pages/SuperHeroRtk";
 import HomeLayout from "../layouts/HomeLayout";
+import SuperHeroesRtk from "../pages/SuperHeroesRtk";
+
+// Define your route objects with paths and components
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: HomeLayout,
+    element: <HomeLayout />,
     children: [
       {
         path: "/",
-        Component: Home,
+        element: <Home />,
       },
       {
         path: "/superhero-axios",
-        Component: SuperHeroAxios,
+        element: <SuperHeroAxios />,
       },
       {
         path: "/superhero-rtk",
-        Component: SuperHeroRtk,
+        element: <SuperHeroesRtk />,
+      },
+      {
+        path: "/superhero-rtk/:heroId",
+        element: <SuperHeroRtk />,
       },
     ],
   },
