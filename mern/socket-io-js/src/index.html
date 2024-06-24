@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Socket.IO chat</title>
+    <style>
+      body {
+        margin: 0;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      #form {
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.25rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+      }
+      #input {
+        border: none;
+        padding: 0 1rem;
+        flex-grow: 1;
+        border-radius: 2rem;
+        margin: 0.25rem;
+      }
+      #input:focus {
+        outline: none;
+      }
+      #form > button {
+        background: #333;
+        border: none;
+        padding: 0 1rem;
+        margin: 0.25rem;
+        border-radius: 3px;
+        outline: none;
+        color: #fff;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+
+      #messages {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .message {
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .message_mine {
+        text-align: end;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .message_others {
+        text-align: start;
+        display: flex;
+        flex-direction: row;
+        /* background-color: green; */
+      }
+
+      .message_username {
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const form = document.getElementById("form");
+      const input = document.getElementById("input");
+      const messages = document.getElementById("messages");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit("chat message", input.value);
+          input.value = "";
+        }
+      });
+
+      console.log({ socket });
+      socket.on("chat message", (msg) => {
+        console.log({ username: socket.id });
+        const isMine = msg.username === socket.id;
+        const messageClass = isMine ? "message_mine" : "message_others";
+
+        const item = document.createElement("li");
+        item.classList.add(messageClass);
+
+        const content = `
+
+        <div class={${messageClass}}>
+
+            </div>
+            <p class="message_username">${msg.username}:</p>
+            <p   class="message-text">${msg.message}</p>
+          `;
+
+        console.log({ content });
+        item.innerHTML = content;
+
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
+  </body>
+</html>
