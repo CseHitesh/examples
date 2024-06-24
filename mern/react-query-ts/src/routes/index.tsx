@@ -5,6 +5,8 @@ import SuperHeroAxios from "../pages/SuperHeroAxios";
 import SuperHeroRtk from "../pages/SuperHeroRtk";
 import HomeLayout from "../layouts/HomeLayout";
 import SuperHeroesRtk from "../pages/SuperHeroesRtk";
+import ParallelQueries from "../pages/ParallelQueries";
+import DynamicParallelQueries from "../pages/DynamicParallelQueries";
 
 // Define your route objects with paths and components
 
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "/superhero-rtk/:heroId",
         element: <SuperHeroRtk />,
+      },
+      {
+        path: "/rtk-parallel/",
+        element: <ParallelQueries />,
+      },
+      {
+        path: "/dynamic-parallel/",
+        element: <DynamicParallelQueries heroIds={[1, 3]} />,
       },
     ],
   },

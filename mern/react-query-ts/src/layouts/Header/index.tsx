@@ -27,6 +27,16 @@ const Header: React.FC = () => {
                 SuperHero RTK
               </Link>
             </li>
+            <li>
+              <Link to="/rtk-parallel/" className="hover:text-gray-400">
+                SuperHero RTK ParallelQueries
+              </Link>
+            </li>
+            <li>
+              <Link to="/dynamic-parallel/" className="hover:text-gray-400">
+                SuperHero RTK Dynamic ParallelQueries
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
