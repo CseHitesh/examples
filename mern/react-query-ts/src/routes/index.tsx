@@ -7,6 +7,7 @@ import HomeLayout from "../layouts/HomeLayout";
 import SuperHeroesRtk from "../pages/SuperHeroesRtk";
 import ParallelQueries from "../pages/ParallelQueries";
 import DynamicParallelQueries from "../pages/DynamicParallelQueries";
+import DependentQueries from "../pages/DependentQueries";
 
 // Define your route objects with paths and components
 
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/dynamic-parallel/",
         element: <DynamicParallelQueries heroIds={[1, 3]} />,
+      },
+      {
+        path: "/rtk-dependent/",
+        element: <DependentQueries email={"hitesh@example.com"} />,
       },
     ],
   },

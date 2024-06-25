@@ -37,6 +37,11 @@ const Header: React.FC = () => {
                 SuperHero RTK Dynamic ParallelQueries
               </Link>
             </li>
+            <li>
+              <Link to="/rtk-dependent/" className="hover:text-gray-400">
+                SuperHero RTK Dynamic DependentQueries
+              </Link>
+            </li>
           </ul>
         </nav>
       </header>
